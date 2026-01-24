@@ -1,19 +1,18 @@
- # Backdoor Mission - Backend
+# Backend – Backdoor Mission Project
 
- Run the backend with Python from the project root or from the `backend` folder.
+## Overview
+The backend provides the logic and API endpoints that connect the PostgreSQL database with the frontend interface and reporting tools. Built using Python and Flask, it handles data validation, CRUD operations, and ensures consistency across all departments.
 
- - From repository root (recommended):
+## Key Responsibilities
+- Serve as the bridge between the frontend and database  
+- Enforce structured data input and prevent duplicates  
+- Provide endpoints for each module: client, coat check, washroom, sanctuary, clinic, safe sleep, and activity tracking  
+- Support scalability for adding new services and reporting requirements  
+- Enable real-time updates for dashboards and Power BI visualizations
 
- ```
- python backend\app.py
- ```
+## Technologies
+- Python, Flask  
+- RESTful API  
+- PostgreSQL  
+- SQLAlchemy (for ORM mapping)  
 
- - From inside the `backend` folder:
-
- ```
- python app.py
- ```
-
- Note: do not run `cd backend ; python app.py` if you're already inside the `backend` folder — that will attempt to `cd` into a non-existent `backend\backend` directory and PowerShell will error.
-
- For Windows users you can also run the `start-backend.ps1` script from the repository root.

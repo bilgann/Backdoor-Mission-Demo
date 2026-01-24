@@ -27,13 +27,6 @@ The project was driven by a desire to support the local community by streamlinin
 ├─ /frontend
 ├─ README.md
 
-## Getting Started
-1. Clone the repository  
-2. Set up PostgreSQL and create the database using the schema in `/backend/schema.sql`  
-3. Start the backend Flask server  
-4. Launch the frontend React application  
-5. Connect Power BI to the PostgreSQL database for reporting
-
 ## Impact
 - Reduced duplicate client entries and improved accuracy of service tracking  
 - Enabled real-time dashboards for staff and leadership  

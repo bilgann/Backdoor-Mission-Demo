@@ -1,15 +1,8 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import blockIcon from '../assets/icons/block.svg'
 
 const Sidebar = ({ mobileOpen, onClose }: { mobileOpen?: boolean; onClose?: () => void }) => {
     const location = useLocation()
-    const navigate = useNavigate()
-
-    const handleLogout = () => {
-        localStorage.removeItem('isAuthenticated')
-        localStorage.removeItem('loginTime')
-        navigate('/login')
-    }
 
     const menuLinks = [
         { name: 'Home', path: '/', icon: 'home' },
@@ -121,14 +114,6 @@ const Sidebar = ({ mobileOpen, onClose }: { mobileOpen?: boolean; onClose?: () =
                         ))}
                     </div>
                 </nav>
-
-                {/* Logout Button */}
-                <button className="logout-button" onClick={() => { handleLogout(); if (onClose) onClose(); }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M13.3333 17.5V15.8333C13.3333 14.9493 12.9821 14.1014 12.357 13.4763C11.7319 12.8512 10.8841 12.5 10 12.5H4.16667C3.28261 12.5 2.43477 12.8512 1.80964 13.4763C1.18452 14.1014 0.833334 14.9493 0.833334 15.8333V17.5M19.1667 9.16667H14.1667M10.4167 5.83333C10.4167 7.67428 8.92428 9.16667 7.08333 9.16667C5.24238 9.16667 3.75 7.67428 3.75 5.83333C3.75 3.99238 5.24238 2.5 7.08333 2.5C8.92428 2.5 10.4167 3.99238 10.4167 5.83333Z" stroke="#FF7373" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    <span>Log out</span>
-                </button>
             </div>
         </aside>
         {mobileOpen ? <div className="sidebar-backdrop" onClick={() => onClose && onClose()} /> : null}

@@ -1,0 +1,176 @@
+{
+  "info": {
+    "name": "Backdoor Mission Demo API",
+    "_postman_id": "bmd-demo-collection-2026-01-25",
+    "description": "Postman collection to test the Backdoor Mission demo backend connected to Supabase.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "api_base", "value": "http://localhost:5000" }
+  ],
+  "item": [
+    {
+      "name": "Get All Clients",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "{{api_base}}/client", "host": ["{{api_base}}"], "path": ["client"] }
+      }
+    },
+    {
+      "name": "Create Client",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"full_name\": \"Jane Doe\",\n  \"gender\": \"F\",\n  \"nickname\": \"Janey\",\n  \"birth_year\": 1990\n}" },
+        "url": { "raw": "{{api_base}}/client", "host": ["{{api_base}}"], "path": ["client"] }
+      }
+    },
+    {
+      "name": "Get Client by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "{{api_base}}/client/1", "host": ["{{api_base}}"], "path": ["client", "1"] }
+      }
+    },
+    {
+      "name": "Suggest Clients (search)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{api_base}}/api/clients?query=Jane",
+          "host": ["{{api_base}}"],
+          "path": ["api", "clients"],
+          "query": [ { "key": "query", "value": "Jane" } ]
+        }
+      }
+    },
+    {
+      "name": "Recent Clients",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{api_base}}/api/clients/recent?limit=10",
+          "host": ["{{api_base}}"],
+          "path": ["api", "clients", "recent"],
+          "query": [ { "key": "limit", "value": "10" } ]
+        }
+      }
+    },
+    {
+      "name": "Create Washroom Record",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"client_id\": 1,\n  \"washroom_type\": \"A\",\n  \"time_in\": \"2026-01-25T10:00:00\",\n  \"date\": \"2026-01-25\"\n}" },
+        "url": { "raw": "{{api_base}}/washroom_records", "host": ["{{api_base}}"], "path": ["washroom_records"] }
+      }
+    },
+    {
+      "name": "Get Washroom Records (by client)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{api_base}}/washroom_records?client_id=1",
+          "host": ["{{api_base}}"], "path": ["washroom_records"],
+          "query": [ { "key": "client_id", "value": "1" } ]
+        }
+      }
+    },
+    {
+      "name": "Create Coat Check Record",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"client_id\": 1,\n  \"bin_no\": 5,\n  \"time_in\": \"2026-01-25T10:05:00\",\n  \"date\": \"2026-01-25\"\n}" },
+        "url": { "raw": "{{api_base}}/coat_check_records", "host": ["{{api_base}}"], "path": ["coat_check_records"] }
+      }
+    },
+    {
+      "name": "Create Sanctuary Record",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"client_id\": 1,\n  \"date\": \"2026-01-25\",\n  \"time_in\": \"2026-01-25T11:00:00\",\n  \"if_serviced\": true\n}" },
+        "url": { "raw": "{{api_base}}/sanctuary_records", "host": ["{{api_base}}"], "path": ["sanctuary_records"] }
+      }
+    },
+    {
+      "name": "Create Clinic Record",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"client_id\": 1,\n  \"purpose_of_visit\": \"Checkup\",\n  \"date\": \"2026-01-25T12:30:00\"\n}" },
+        "url": { "raw": "{{api_base}}/clinic_records", "host": ["{{api_base}}"], "path": ["clinic_records"] }
+      }
+    },
+    {
+      "name": "Create Safe Sleep Record",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"client_id\": 1,\n  \"bed_no\": 3,\n  \"is_occupied\": true,\n  \"date\": \"2026-01-25T22:30:00\"\n}" },
+        "url": { "raw": "{{api_base}}/safe_sleep_records", "host": ["{{api_base}}"], "path": ["safe_sleep_records"] }
+      }
+    },
+    {
+      "name": "Create Activity",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"activity_name\": \"Bingo Night\",\n  \"date\": \"2026-01-24\",\n  \"start_time\": \"2026-01-24T19:00:00\",\n  \"end_time\": \"2026-01-24T20:00:00\",\n  \"attendance\": 17\n}" },
+        "url": { "raw": "{{api_base}}/activity", "host": ["{{api_base}}"], "path": ["activity"] }
+      }
+    },
+    {
+      "name": "Create Client Activity",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"client_id\": 1,\n  \"activity_id\": 1\n}" },
+        "url": { "raw": "{{api_base}}/client_activity", "host": ["{{api_base}}"], "path": ["client_activity"] }
+      }
+    },
+    {
+      "name": "Get Activities (range)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{api_base}}/activity?start_date=2026-01-01&end_date=2026-01-31",
+          "host": ["{{api_base}}"],
+          "path": ["activity"],
+          "query": [
+            { "key": "start_date", "value": "2026-01-01" },
+            { "key": "end_date", "value": "2026-01-31" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Client Activity (by client)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{api_base}}/client_activity?client_id=1",
+          "host": ["{{api_base}}"],
+          "path": ["client_activity"],
+          "query": [ { "key": "client_id", "value": "1" } ]
+        }
+      }
+    },
+    {
+      "name": "Export Clients (Excel)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "{{api_base}}/export/client", "host": ["{{api_base}}"], "path": ["export", "client"] }
+      }
+    }
+  ]
+}

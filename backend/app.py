@@ -24,11 +24,26 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 DEMO_READ_ONLY = os.getenv("DEMO_READ_ONLY", "true").lower() == "true"
 
 # load config from environment variables or a config file
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
+database_url = os.getenv(
     "DATABASE_URL",
     "postgresql://postgres:Admin2025!@localhost:5432/backdoor_mission_database"
 )
+
+# Force IPv4 for Supabase connections on platforms without IPv6 support (like Render free tier)
+# Replace hostname with pooler or add connection parameters
+if "supabase.co" in database_url and "pooler.supabase" not in database_url:
+    # Add connection timeout and other parameters to help with connection
+    if "?" in database_url:
+        database_url += "&connect_timeout=10&keepalives=1&keepalives_idle=30"
+    else:
+        database_url += "?connect_timeout=10&keepalives=1&keepalives_idle=30"
+
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_pre_ping': True,
+    'pool_recycle': 300,
+}
 
 # initialize the database with the app
 db.init_app(app)

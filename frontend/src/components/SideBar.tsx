@@ -1,5 +1,4 @@
 import { Link, useLocation } from 'react-router-dom'
-import blockIcon from '../assets/icons/block.svg'
 
 const Sidebar = ({ mobileOpen, onClose }: { mobileOpen?: boolean; onClose?: () => void }) => {
     const location = useLocation()
@@ -69,15 +68,6 @@ const Sidebar = ({ mobileOpen, onClose }: { mobileOpen?: boolean; onClose?: () =
                         </svg>
                     </div>
                     <h2 className="sidebar-app-name">The Backdoor Mission</h2>
-                </div>
-
-                {/* User Info */}
-                <div className="user-info-card">
-                    <img src={blockIcon} className="user-avatar-box" alt="User avatar" />
-                    <div className="user-info-text">
-                        <div className="user-name">Dan Laffin</div>
-                        <div className="user-email">dlaffin@backdoormission.ca</div>
-                    </div>
                 </div>
 
                 {/* Menu Section */}

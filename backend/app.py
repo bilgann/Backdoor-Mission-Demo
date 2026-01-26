@@ -1613,6 +1613,26 @@ def get_client_statistics():
             start_date = today
             end_date = today
         
+        # For demo purposes: if no data exists for the requested range, show the most recent data
+        # Check if any data exists for the requested date range
+        any_data = db.session.query(WashroomRecord).filter(
+            WashroomRecord.date >= start_date,
+            WashroomRecord.date <= end_date
+        ).first()
+        
+        if not any_data and time_range == 'day':
+            # Find the most recent date with data
+            latest_record = db.session.query(WashroomRecord.date).order_by(WashroomRecord.date.desc()).first()
+            if not latest_record:
+                latest_record = db.session.query(CoatCheckRecord.date).order_by(CoatCheckRecord.date.desc()).first()
+            if not latest_record:
+                latest_record = db.session.query(SanctuaryRecord.date).order_by(SanctuaryRecord.date.desc()).first()
+            
+            if latest_record:
+                # Use the most recent date instead
+                start_date = latest_record[0]
+                end_date = latest_record[0]
+        
         # Get all unique clients from all service tables within date range (for total unique clients)
         client_ids = set()
 

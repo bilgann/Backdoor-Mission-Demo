@@ -2688,6 +2688,33 @@ def login():
             "error": str(e)
         }), 500
 
+@app.route('/debug/db', methods=['GET'])
+def debug_db():
+    """Debug endpoint to check database connection and data"""
+    try:
+        from datetime import date
+        
+        # Count washroom records for today
+        washroom_count = db.session.query(func.count(WashroomRecord.washroom_id)).filter(
+            WashroomRecord.date >= date(2026, 1, 25)
+        ).scalar() or 0
+        
+        # Get latest date
+        latest = db.session.query(WashroomRecord.date).order_by(
+            WashroomRecord.date.desc()
+        ).first()
+        
+        return jsonify({
+            'washroom_count_today': washroom_count,
+            'latest_date': str(latest[0]) if latest else None,
+            'success': True
+        }), 200
+    except Exception as e:
+        return jsonify({
+            'error': str(e),
+            'success': False
+        }), 500
+
 # run the app if this file is executed directly
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1712,16 +1712,19 @@ def get_client_statistics():
         chart_unique = []
         
         if time_range == 'day':
+            # Use the adjusted start_date (may be most recent date if no data for today)
+            chart_date = start_date
+            
             # include date-only services (Clinic, SafeSleep) into the current hour bucket
-            clinic_today = db.session.query(func.count(ClinicRecord.clinic_id)).filter(func.date(ClinicRecord.date) == today).scalar() or 0
-            safe_sleep_today = db.session.query(func.count(SafeSleepRecord.sleep_id)).filter(SafeSleepRecord.date == today).scalar() or 0
+            clinic_today = db.session.query(func.count(ClinicRecord.clinic_id)).filter(func.date(ClinicRecord.date) == chart_date).scalar() or 0
+            safe_sleep_today = db.session.query(func.count(SafeSleepRecord.sleep_id)).filter(SafeSleepRecord.date == chart_date).scalar() or 0
 
             # determine which hour bucket to put date-only records into (clamp to displayed hours 9-18)
             current_hour = datetime.now().hour
             bucket_hour = min(max(current_hour, 9), 18)
 
             for hour in range(9, 19):
-                hour_start = datetime.combine(today, datetime.min.time().replace(hour=hour))
+                hour_start = datetime.combine(chart_date, datetime.min.time().replace(hour=hour))
                 hour_end = hour_start + timedelta(hours=1)
                 hour_total = 0
                 hour_unique_ids = set()
@@ -1752,19 +1755,19 @@ def get_client_statistics():
                 if hour == bucket_hour:
                     hour_total += (clinic_today or 0) + (safe_sleep_today or 0)
 
-                    # also include any washroom/sanctuary/coatcheck rows where time_in is null but date == today
-                    hour_total += db.session.query(func.count(WashroomRecord.washroom_id)).filter(WashroomRecord.time_in == None, WashroomRecord.date == today).scalar() or 0
-                    hour_total += db.session.query(func.count(CoatCheckRecord.check_id)).filter(CoatCheckRecord.time_in == None, CoatCheckRecord.date == today).scalar() or 0
-                    hour_total += db.session.query(func.count(SanctuaryRecord.sanctuary_id)).filter(SanctuaryRecord.time_in == None, SanctuaryRecord.date == today).scalar() or 0
+                    # also include any washroom/sanctuary/coatcheck rows where time_in is null but date == chart_date
+                    hour_total += db.session.query(func.count(WashroomRecord.washroom_id)).filter(WashroomRecord.time_in == None, WashroomRecord.date == chart_date).scalar() or 0
+                    hour_total += db.session.query(func.count(CoatCheckRecord.check_id)).filter(CoatCheckRecord.time_in == None, CoatCheckRecord.date == chart_date).scalar() or 0
+                    hour_total += db.session.query(func.count(SanctuaryRecord.sanctuary_id)).filter(SanctuaryRecord.time_in == None, SanctuaryRecord.date == chart_date).scalar() or 0
 
-                    # include distinct client ids from date-only services for today into unique set
+                    # include distinct client ids from date-only services for chart_date into unique set
                     try:
-                        rows = db.session.query(ClinicRecord.client_id).filter(func.date(ClinicRecord.date) == today).distinct().all()
+                        rows = db.session.query(ClinicRecord.client_id).filter(func.date(ClinicRecord.date) == chart_date).distinct().all()
                         hour_unique_ids.update([r[0] for r in rows if r and r[0] is not None])
                     except Exception:
                         pass
                     try:
-                        rows = db.session.query(SafeSleepRecord.client_id).filter(SafeSleepRecord.date == today).distinct().all()
+                        rows = db.session.query(SafeSleepRecord.client_id).filter(SafeSleepRecord.date == chart_date).distinct().all()
                         hour_unique_ids.update([r[0] for r in rows if r and r[0] is not None])
                     except Exception:
                         pass

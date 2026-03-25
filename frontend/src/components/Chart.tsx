@@ -5,7 +5,7 @@
  * Uses recharts library for rendering.
  */
 
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip } from 'recharts'
 import '../styles/Chart.css'
 

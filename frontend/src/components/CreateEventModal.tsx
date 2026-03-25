@@ -15,7 +15,6 @@ const CreateEventModal: React.FC<Props> = ({ onClose, existingEvent, onSaved }) 
   const [date, setDate] = useState(formatDateLocal(new Date()))
   const [startTime, setStartTime] = useState('13:00')
   const [endTime, setEndTime] = useState('14:00')
-  const [attendance, setAttendance] = useState(0)
   const colors = ['#C3E4FF','#C3FFD7','#FC8C37','#F6254F','#27608F','#FFED7A']
   const [color, setColor] = useState<string>(colors[0])
 

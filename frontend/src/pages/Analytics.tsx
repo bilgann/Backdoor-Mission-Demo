@@ -14,7 +14,7 @@ import ActivityPanel from '../components/ActivityPanel'
 import Heatmap from '../components/Heatmap'
 import CardFrame from '../components/CardFrame'
 import ScorePanel from '../components/ScorePanel'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import config from '../config'
 
 const Analytics = () => {
@@ -187,12 +187,10 @@ export default Analytics;
 // small subcomponent to fetch and render the washroom heatmap
 function WashroomHeatmap() {
     const [data, setData] = useState<any>({})
-    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         let cancelled = false
         const fetchHeatmap = async () => {
-            setLoading(true)
             try {
                 const resp = await fetch(`${config.API_BASE}/api/department-heatmap?dept=washroom&range=day`)
                 const json = await resp.json()
@@ -202,8 +200,6 @@ function WashroomHeatmap() {
                 }
             } catch (e) {
                 if (!cancelled) setData(makeMock())
-            } finally {
-                if (!cancelled) setLoading(false)
             }
         }
         fetchHeatmap()
@@ -226,12 +222,10 @@ function WashroomHeatmap() {
 // small subcomponent to fetch and render the coat check heatmap
 function CoatCheckHeatmap() {
     const [data, setData] = useState<any>({})
-    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         let cancelled = false
         const fetchHeatmap = async () => {
-            setLoading(true)
             try {
                 const resp = await fetch(`${config.API_BASE}/api/department-heatmap?dept=coatcheck&range=day`)
                 const json = await resp.json()
@@ -241,8 +235,6 @@ function CoatCheckHeatmap() {
                 }
             } catch (e) {
                 if (!cancelled) setData(makeMock())
-            } finally {
-                if (!cancelled) setLoading(false)
             }
         }
         fetchHeatmap()
@@ -265,12 +257,10 @@ function CoatCheckHeatmap() {
 // small subcomponent to fetch and render the sanctuary heatmap
 function SanctuaryHeatmap() {
     const [data, setData] = useState<any>({})
-    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         let cancelled = false
         const fetchHeatmap = async () => {
-            setLoading(true)
             try {
                 const resp = await fetch(`${config.API_BASE}/api/department-heatmap?dept=sanctuary&range=day`)
                 const json = await resp.json()
@@ -280,8 +270,6 @@ function SanctuaryHeatmap() {
                 }
             } catch (e) {
                 if (!cancelled) setData(makeMock())
-            } finally {
-                if (!cancelled) setLoading(false)
             }
         }
         fetchHeatmap()
@@ -304,12 +292,10 @@ function SanctuaryHeatmap() {
 // small subcomponent to fetch and render the safe sleep heatmap
 function SafeSleepHeatmap() {
     const [data, setData] = useState<any>({})
-    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         let cancelled = false
         const fetchHeatmap = async () => {
-            setLoading(true)
             try {
                 const resp = await fetch(`${config.API_BASE}/api/department-heatmap?dept=safesleep&range=day`)
                 const json = await resp.json()
@@ -319,8 +305,6 @@ function SafeSleepHeatmap() {
                 }
             } catch (e) {
                 if (!cancelled) setData(makeMock())
-            } finally {
-                if (!cancelled) setLoading(false)
             }
         }
         fetchHeatmap()
@@ -343,12 +327,10 @@ function SafeSleepHeatmap() {
 // small subcomponent to fetch and render the weekly average occupancy for Safe Sleep
 function SafeSleepWeeklyAverageOccupancy() {
     const [pct, setPct] = useState<number | null>(null)
-    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         let cancelled = false
         const fetchAvg = async () => {
-            setLoading(true)
             try {
                 const resp = await fetch(`${config.API_BASE}/api/safe-sleep-statistics?range=week`)
                 const json = await resp.json()
@@ -366,14 +348,13 @@ function SafeSleepWeeklyAverageOccupancy() {
             } catch (e) {
                 if (!cancelled) setPct(0)
             } finally {
-                if (!cancelled) setLoading(false)
             }
         }
         fetchAvg()
         return () => { cancelled = true }
     }, [])
 
-    if (loading || pct === null) return <span>—</span>
+    if (pct === null) return <span>—</span>
 
     // choose color by thresholds matching SafeSleep page
     let color = '#95F492'
@@ -402,12 +383,10 @@ function SafeSleepWeeklyAverageOccupancy() {
 // small subcomponent to fetch and render the clinic heatmap
 function ClinicHeatmap() {
     const [data, setData] = useState<any>({})
-    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         let cancelled = false
         const fetchHeatmap = async () => {
-            setLoading(true)
             try {
                 const resp = await fetch(`${config.API_BASE}/api/department-heatmap?dept=clinic&range=day`)
                 const json = await resp.json()
@@ -417,8 +396,6 @@ function ClinicHeatmap() {
                 }
             } catch (e) {
                 if (!cancelled) setData(makeMock())
-            } finally {
-                if (!cancelled) setLoading(false)
             }
         }
         fetchHeatmap()

@@ -24,7 +24,6 @@ function parseISODateToLocal(dstr: string){
 const ScorePanel: React.FC = () => {
   const [range, setRange] = useState<'day'|'week'|'month'|'year'>('day')
   const [avg, setAvg] = useState<number | null>(null)
-  const [responses, setResponses] = useState<number>(0)
   const [chartData, setChartData] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
 
@@ -54,9 +53,6 @@ const ScorePanel: React.FC = () => {
         endDate = new Date(today.getFullYear(), 11, 31)
       }
 
-      const sd = startDate.toISOString().slice(0, 10)
-      const ed = endDate.toISOString().slice(0, 10)
-
       function formatDateLocal(d: Date){
         const y = d.getFullYear()
         const m = String(d.getMonth()+1).padStart(2,'0')
@@ -83,7 +79,7 @@ const ScorePanel: React.FC = () => {
         })
       }
 
-      setResponses(count)
+
       setAvg(count > 0 ? totalScore / count : null)
 
       // build chart data: average score per bucket similar to ActivityPanel
@@ -174,7 +170,6 @@ const ScorePanel: React.FC = () => {
 
     } catch (e) {
       setAvg(null)
-      setResponses(0)
       setChartData([])
     } finally {
       setLoading(false)

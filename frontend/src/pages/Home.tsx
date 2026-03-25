@@ -7,7 +7,6 @@
  * - Button to navigate to Get Clients page
  */
 
-import { Link } from 'react-router-dom'
 import TotalServicesUsed from '../components/TotalServicesUsed'
 import TotalVisitors from '../components/TotalVisitors'
 import ActionButton from '../components/ActionButton'

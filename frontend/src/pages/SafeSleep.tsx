@@ -51,8 +51,7 @@ const SafeSleep: React.FC = () => {
                 clientsList.forEach((c: any) => { clientMap[c.client_id] = c.full_name })
             }
 
-            // snapshot current rows so we can preserve optimistic timestamps
-            const prevRowsSnapshot = rows || []
+            // fetch and process records
             const fetched = (data || []).map((r: any) => {
                 const id = r.sleep_id ?? r.id ?? r.safe_sleep_id ?? r.record_id
                 const bedNoNum = Number(r.bed_no) || 0

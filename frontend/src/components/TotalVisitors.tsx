@@ -25,9 +25,8 @@ interface ApiResult {
   service_breakdown?: { [key: string]: number }
 }
 
-const TotalVisitors: React.FC<{ showRangeSelector?: boolean }> = ({ showRangeSelector = false }) => {
+const TotalVisitors: React.FC<{ showRangeSelector?: boolean }> = () => {
   const [data, setData] = useState<DeptData[]>([])
-  const [total, setTotal] = useState(0)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [range, setRange] = useState<'day' | 'week' | 'month' | 'year'>('day')
@@ -57,7 +56,7 @@ const TotalVisitors: React.FC<{ showRangeSelector?: boolean }> = ({ showRangeSel
           pctOfMax: maxVal > 0 ? (e.value / maxVal) * 100 : 0
         }))
         setData(withPct)
-        setTotal(tot)
+
       } else {
         setError('Failed to load visitor statistics')
       }

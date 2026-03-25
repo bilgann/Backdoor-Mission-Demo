@@ -68,7 +68,6 @@ interface Props {
 
 const AttendanceRecords: React.FC<Props> = ({ weekStart, refreshToken }) => {
   const [activities, setActivities] = useState<ActivityItem[]>([])
-  const [loading, setLoading] = useState(false)
   const [clientActs, setClientActs] = useState<ClientActivity[]>([])
 
   useEffect(() => {
@@ -77,7 +76,6 @@ const AttendanceRecords: React.FC<Props> = ({ weekStart, refreshToken }) => {
   }, [weekStart, refreshToken])
 
   async function fetchForWeek(ws: Date){
-    setLoading(true)
     const start = formatDateLocal(ws)
     const end = formatDateLocal(new Date(ws.getTime() + 6*24*60*60*1000))
     try{
@@ -98,7 +96,6 @@ const AttendanceRecords: React.FC<Props> = ({ weekStart, refreshToken }) => {
         console.error('[AttendanceRecords] client_activity fetch failed', caRes.status)
       }
     }catch(e){/* ignore */}
-    setLoading(false)
   }
 
   // group activities by weekday index 0..4 (Mon..Fri)

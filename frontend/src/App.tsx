@@ -44,7 +44,6 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 }
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -52,14 +51,13 @@ function App() {
     const checkAuth = () => {
       if (localStorage.getItem('isAuthenticated') === 'true') {
         if (isSessionValid()) {
-          setIsAuthenticated(true)
+          // Session is valid
         } else {
           // Session expired, clear auth
           clearAuthentication()
-          setIsAuthenticated(false)
         }
       } else {
-        setIsAuthenticated(false)
+        // Not authenticated
       }
       setLoading(false)
     }
@@ -72,7 +70,6 @@ function App() {
         if (!isSessionValid()) {
           // Session expired, log out
           clearAuthentication()
-          setIsAuthenticated(false)
           // Force navigation to login
           window.location.href = '/login'
         }

@@ -1,4 +1,3 @@
-from flask import Flask
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -729,7 +728,7 @@ def create_client_activity():
     print(f"[DEBUG] create_client_activity incoming payload sample: {payload}")
 
     try:
-        # Attempt to marshal the payload but ignore provided `date` â€” use server time
+        # Attempt to marshal the payload but ignore provided `date` - use server time
         data = ClientActivitySchema().load(payload, partial=True)
     except ValidationError as err:
         return jsonify({"errors": err.messages}), 400

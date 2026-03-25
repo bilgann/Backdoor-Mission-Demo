@@ -1,7 +1,13 @@
-// Centralized frontend configuration values
-// Export the API base URL so it can be changed in one place.
-// In production you can replace this with an environment variable or build-time value.
-const API_BASE = 'http://localhost:5000'
+// Centralized frontend configuration values.
+// Uses VITE_API_URL in production builds and falls back to local backend for development.
+const rawApiUrl = (import.meta.env.VITE_API_URL || '').trim()
+const normalizedApiUrl = rawApiUrl
+  ? (rawApiUrl.startsWith('http://') || rawApiUrl.startsWith('https://')
+      ? rawApiUrl
+      : `https://${rawApiUrl}`)
+  : 'http://localhost:5000'
+
+const API_BASE = normalizedApiUrl.replace(/\/+$/, '')
 
 export default {
   API_BASE
